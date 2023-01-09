@@ -100,10 +100,13 @@ function removeTask(id){
     const taskIndex = todoObjList.findIndex(function (task) {
         return task.id === id;
       });
-    
-    todoObjList.splice(taskIndex, 1);
-    renderTasks();
-    localStorage.setItem('tasks',JSON.stringify(todoObjList));
+    if(todoObjList[taskIndex].completed){
+        todoObjList.splice(taskIndex, 1);
+        renderTasks();
+        localStorage.setItem('tasks',JSON.stringify(todoObjList));
+    } else{
+        alert('Please complete the task first.')
+    }
 
 }
 
