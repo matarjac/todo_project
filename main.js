@@ -2,12 +2,15 @@
 let addTaskBtn = document.getElementById('add-list-btn');
 let taskInput = document.getElementById('input-task');
 let todoList = document.querySelector('ul');
+let resetBtn = document.getElementById('reset-btn');
 let taskLi;
 
 let todoObjList = JSON.parse(localStorage.getItem('tasks')) || [];
 console.log(todoObjList);
 
 renderTasks();
+
+resetBtn.addEventListener('click', resetList);
 
 function renderTasks(){
     todoList.innerHTML = '';
@@ -67,6 +70,7 @@ function renderTasks(){
         // Adding the new li to the big ul
         todoList.appendChild(taskLi);
     }
+    updateResetBtnStyle();
 }
 
 function addTask(e){
@@ -118,4 +122,23 @@ function toggleCheckBox(id){
     }
     localStorage.setItem('tasks',JSON.stringify(todoObjList));  
     renderTasks();  
+}
+
+function updateResetBtnStyle(){
+    if(todoObjList.length>0){
+        resetBtn.style.border = "1px #dc0000 solid";
+        resetBtn.style.backgroundColor = 'white';
+        resetBtn.style.color='#dc0000'
+    } else{ 
+        resetBtn.style.backgroundColor = 'grey';
+        resetBtn.style.color = 'white';
+        resetBtn.style.border='0px';
+    }
+}
+
+function resetList(){
+    todoObjList = []
+    localStorage.setItem('tasks',JSON.stringify(todoObjList));
+    todoObjList = JSON.parse(localStorage.getItem('tasks')) || [];
+    renderTasks();
 }
